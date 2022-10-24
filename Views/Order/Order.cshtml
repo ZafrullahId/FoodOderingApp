@@ -1,0 +1,18 @@
+@using EF_Core.Models.DTOs.ResponseModels
+@model FoodResponsModel
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/styles/index.css">
+    <span>Are You Sure You Want To order for this Food?</span>
+    <div class="images">
+        <div class="post-image">
+                    <img src="~/Images/@Model.Data.ImageUrl" alt="Model.Data image">
+                    <h6>@Model.Data.Type</h6>
+                    <p>@Model.Data.Description</p>
+                    <p>$ @Model.Data.Price</p>
+                    <p>@Model.Data.Status</p>
+    <form asp-action="Order">
+        <input type="submit" value="Order" class="btn btn-primary" />
+    </form>
+        </div>
+    </div>
+</div

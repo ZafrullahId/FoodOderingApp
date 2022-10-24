@@ -1,0 +1,66 @@
+@using EF_Core.Models.DTOs.ResponseModels
+@model List<StaffResponsModel>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <script src="~/scripts/w3.js"></script>
+    <div class="form-group">
+       <i class="fa fa-search-minus"></i><input type="search" id="search" class="form-control" oninput="w3.filterHTML('#list', '.staff', this.value)" placeholder="Search for staff">
+    </div>
+@if (@Model == null || @Model.Count() == 0)
+{
+    <h1>No Staff yet</h1>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table" id="list">
+            <caption>List of Staffs</caption>
+            <thead>
+                <tr>
+                    <th scope="col">S/N</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">NumberLine</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">State</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Street</th>
+                    <th scope="col">PostalCode</th>
+                    <th scope="col">DateOfBirth</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">NextOfKin</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var staff in @Model)
+                {
+                    <tr class="staff">
+                        <th scope="row">@staff.Data.Id</th>
+                        <td>@staff.Data.User.Name</td>
+                        <td>@staff.Data.User.Email</td>
+                        <td>@staff.Data.User.PhoneNumber</td>
+                        <td>@staff.Data.User.NumberLine</td>
+                        <td>@staff.Data.User.Country</td>
+                        <td>@staff.Data.User.State</td>
+                        <td>@staff.Data.User.City</td>
+                        <td>@staff.Data.User.Street</td>
+                        <td>@staff.Data.User.PostalCode</td>
+                        <td>@staff.Data.DathOfBirth</td>
+                        <td>@staff.Data.Gender</td>
+                        <td>@staff.Data.Role</td>
+                        <td>@staff.Data.NextOfKin</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn-primary btn" asp-action="StaffProfile" asp-route-id=@staff.Data.Id>View</a>
+                                <a class="btn-warning btn" asp-action="EditStaff" asp-route-id=@staff.Data.Id>Edit</a>
+                                <a class="btn-danger btn" asp-action="DeleteStaff" asp-route-id=@staff.Data.Id>Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MVC_Project</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/styles/index.css">
+    <link rel="stylesheet" href="~/styles/default/font-awesome.min.css">
+</head>
+<body>
+   <header class="header-container">
+
+            <div class="logo-container">
+            </div>
+
+            <nav class="nav-links">
+                <ul class="list-no-style">
+                    <a href="AboutUs.html" style="text-decoration: none; color: black;"><li>About</li></a>
+                    <li>How It Works</li>
+                    <li class="active-nav">Try For Free</li>
+                    <li class="logo">F<span>OO</span>D CHOW</li>
+                    <img src="~/Images/master-chef-logo-vector.webp" alt="" height="70px" width="100px" style="border-radius: 50%; margin-top: -20px;">
+                </ul>
+            </nav>
+        </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @* <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - MVC_Project - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer> *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

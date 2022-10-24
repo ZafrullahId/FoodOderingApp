@@ -1,0 +1,44 @@
+@using EF_Core.Models.DTOs.ResponseModels
+@using EF_Core.Models.Enum
+@model List<FoodResponsModel>
+    <link rel="stylesheet" href="~/css/foods.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+@if (@Model == null || @Model.Count() == 0)
+{
+    <h1>No Food yet</h1>
+}
+
+     <div class="images">
+        @foreach (var food in @Model)
+        {
+            <div class="post-image">
+                @if (food.Data.Status != Status.NotAvailable)
+                {   
+                        <img  asp-append-version="true" src="~/Images/@food.Data.ImageUrl" alt="food.Data image">
+                        <h6>@food.Data.Type</h6>
+                        <p>@food.Data.Description</p>
+                        <p>$ @food.Data.Price</p>
+                        <p>@food.Data.AvailableTime</p>
+                        <p>@food.Data.Status</p>
+                        <p>@food.Data.NumberOfPlates</p>
+                        <div class="btn-group">
+                        <a class="btn-danger btn" asp-action="DeleteFood" asp-route-id=@food.Data.Id style="border-radius: 5px;">Delete</a>
+                        <a class="btn-warning btn" asp-action="EditFood" asp-route-id=@food.Data.Id style="border-radius: 5px;">Update</a>
+                        </div>
+                }
+                else
+                {
+                        <img src="~/Images/@food.Data.ImageUrl" alt="food.Data image">
+                        <h6>@food.Data.Type</h6>
+                        <p>@food.Data.Description</p>
+                        <p>$ @food.Data.Price</p>
+                        <p>@food.Data.Status</p>
+                        <p>@food.Data.NumberOfPlates</p>
+                        <div class="btn-group">
+                        <a class="btn-danger btn" asp-action="DeleteFood" asp-route-id=@food.Data.Id style="border-radius: 5px;">Delete</a>
+                        <a class="btn-warning btn" asp-action="EditFood" asp-route-id=@food.Data.Id style="border-radius: 5px;">Update</a>
+                        </div>
+                }
+            </div>
+        }
+</div>

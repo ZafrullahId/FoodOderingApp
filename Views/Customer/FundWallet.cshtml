@@ -1,0 +1,15 @@
+@using EF_Core.Models.DTOs.RequesteModels
+@model UpdateCustomerRequestModel
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" asp-action="FundWallet">
+                 <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount"/>
+                </div>
+                <button type="submit">Fund</button>
+            </form>
+        </div>
+    </div>
+</div>

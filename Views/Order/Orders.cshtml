@@ -1,0 +1,39 @@
+@using EF_Core.Models.Entity
+@using EF_Core.Models.Enum
+@model List<FoodOrder>
+    <link rel="stylesheet" href="~/css/foods.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @if (@Model == null || @Model.Count() == 0)
+    {
+      <h1>No Orders yet</h1>
+    }
+    <div class="images">
+           @foreach (var food in @Model)
+        {
+         <div class="post-image">
+            @if (food.Food.Status != Status.NotAvailable)
+            {   
+                    <img src="~/Images/@food.Food.ImageUrl" alt="food image">
+                    <h6>TYPE: @food.Food.Type</h6>
+                    <p>DESCRIPTION: @food.Food.Description</p>
+                    <p>PRICE: $ @food.Food.Price</p>
+                    <p>STATUS: @food.Food.Status</p>
+                    <p>ORDERED TIME: @food.Order.CreatedAt</p>
+                    if (food.Order.IsDelivered == true)
+                    {
+                       <div class="btn-group">
+                                <a class="btn-warning btn" asp-action="CustomerOrderProfile" asp-controller="Customer" asp-route-email=@food.Order.Customer.User.Email>Customer</a>        
+                                <button class="btn-danger btn" asp-action="DeliveryStatus" asp-controller="Order" asp-route-Id=@food.Order.Id disabled>Mark as Delivered</button>
+                            </div>              
+                    }
+                    else
+                    {
+                            <div class="btn-group">
+                                <a class="btn-warning btn" asp-action="CustomerOrderProfile" asp-controller="Customer" asp-route-email=@food.Order.Customer.User.Email>Customer</a>
+                                <a class="btn-danger btn" asp-action="DeliveryStatus" asp-controller="Order" asp-route-Id=@food.Order.Id>Mark as Delivered</a>
+                            </div>              
+                    }
+            }
+             </div>
+        }
+    </div>

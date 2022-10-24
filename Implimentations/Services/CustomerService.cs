@@ -1,0 +1,315 @@
+using System;
+using EF_Core.Models.Dto;
+using System.Collections.Generic;
+using System.Linq;
+using EF_Core.Models.Entity;
+using System.Threading.Tasks;
+using EF_Core.Interface.Services;
+using EF_Core.Interface.Repositories;
+using EF_Core.Models.DTOs.ResponseModels;
+using EF_Core.Models.DTOs.RequesteModels;
+
+namespace EF_Core.Implimentations.Service
+{
+    public class CustomerService : ICustomerService
+    {
+        private readonly ICustomerRepo _customerRepo;
+        public CustomerService(ICustomerRepo customerRepo)
+        {
+            _customerRepo = customerRepo;
+        }
+        public async Task<BaseResponse> DeleteAsync(string email)
+        {
+            var customer = await _customerRepo.GetByEmailAsync(email);
+            if (customer == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Account not found",
+                    Success = false
+                };
+            }
+             await _customerRepo.DeleteAsync(customer.User.Email);
+             return new BaseResponse
+            {
+              Message = "Your Account has being Deleted",
+              Success = true
+            };
+        }
+        
+
+        public async Task<CustomerResponsModel> CheckWalletAsync(string email)
+        {
+            var customer = await _customerRepo.GetByEmailAsync(email);
+            if(customer == null)
+            {
+                return new CustomerResponsModel
+                {
+                    Message = "Your Wallet was not found",
+                    Success = false
+                };
+            }
+            return new CustomerResponsModel
+            {
+                Message = $"Your Wallet balance is #{customer.Wallet}",
+                Success = true,
+                Data = new CustomerDto
+                {
+                    Wallet = customer.Wallet
+                }
+            };
+        }
+
+        public async Task<BaseResponse> EditAsync(string email, UpdateCustomerRequestModel model)
+        {
+             var customer = await _customerRepo.GetByEmailAsync(email);
+            if (customer == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Profile Not Found",
+                    Success = false
+                };
+            }
+            customer.NextOfKin = model.NextOfKin;
+            customer.DateOfBirth = model.DathOfBirth;
+            customer.Gender = model.Gender;
+            customer.User.FirstName = model.FirstName;
+            customer.User.LastName = model.LastName;
+            customer.User.PhoneNumber = model.PhoneNumber;
+            customer.User.Address.NumberLine = model.NumberLine;
+            customer.User.Address.Street = model.City;
+            customer.User.Address.PostalCode = model.PostalCode;
+            customer.User.Address.City = model.City;
+            customer.User.Address.State = model.State;
+            customer.User.Address.Country = model.Country;
+            customer.UpdatedAt = DateTime.Now;
+            var response = await _customerRepo.UpdateAsync(customer); 
+                return new BaseResponse
+                {
+                    Message = "Profile Successfully Updated",
+                    Success = true
+                };
+        }
+
+        public async Task<CustomerResponsModel> FindAsync(string email, string password)
+        {
+            
+            var customer = await _customerRepo.GetByEmailAsync(email);
+            if (customer != null && customer.User.Password == password)
+            {
+                return new CustomerResponsModel()
+                {
+                     Message = "Valid Login Credentials",
+                    Success = true,
+                    Data = new CustomerDto
+                    {
+                        Id = customer.Id,
+                        NextOfKin = customer.NextOfKin,
+                        DateOfBirth = customer.DateOfBirth,
+                        Gender = customer.Gender,
+                        Wallet = customer.Wallet,
+                        User = new UserDto
+                        {
+                            
+                            Name = $"{customer.User.LastName} {customer.User.FirstName}",
+                            Email = customer.User.Email,
+                            PhoneNumber = customer.User.PhoneNumber,
+                            City = customer.User.Address.City,
+                            Country = customer.User.Address.Country,
+                            State = customer.User.Address.State,
+                            NumberLine = customer.User.Address.NumberLine,
+                            PostalCode = customer.User.Address.PostalCode,
+                            Street = customer.User.Address.Street
+                        }
+                    }
+                };
+            }
+                return new CustomerResponsModel
+                {
+                    Message = "Invalid Login Credentials",
+                    Success = false
+                };
+               
+        }
+
+        public async Task<CustomerResponsModel> FindByEmailAsync(string email)
+        {
+            var customer = await _customerRepo.GetByEmailAsync(email);
+            if (customer != null)
+            {
+                return new CustomerResponsModel
+                {
+                     Message = "Found",
+                    Success = true,
+                    Data = new CustomerDto
+                    {
+                        Id = customer.Id,
+                        NextOfKin = customer.NextOfKin,
+                        DateOfBirth = customer.DateOfBirth,
+                        Gender = customer.Gender,
+                        Wallet = customer.Wallet,
+                        User = new UserDto
+                        {
+                            Name = $"{customer.User.LastName} {customer.User.FirstName}",
+                            Email = customer.User.Email,
+                            PhoneNumber = customer.User.PhoneNumber,
+                            City = customer.User.Address.City,
+                            Country = customer.User.Address.Country,
+                            State = customer.User.Address.State,
+                            NumberLine = customer.User.Address.NumberLine,
+                            PostalCode = customer.User.Address.PostalCode,
+                            Street = customer.User.Address.Street
+                        }
+                    }
+                };
+            }
+                return new CustomerResponsModel
+                {
+                    Message = "Not Found",
+                    Success = false
+                };
+               
+        }
+
+        public async Task<List<CustomerResponsModel>> GetAllAsync()
+        {
+            var customers = await _customerRepo.ListAsync();
+           return customers.Select(customer => new CustomerResponsModel
+            {
+                Data = new CustomerDto
+                {
+                        Id = customer.Id,
+                        NextOfKin = customer.NextOfKin,
+                        DateOfBirth = customer.DateOfBirth,
+                        Gender = customer.Gender,
+                     User = new UserDto()
+                     {
+                        Name = $"{customer.User.LastName} {customer.User.FirstName}",
+                        Email = customer.User.Email,
+                        PhoneNumber = customer.User.PhoneNumber,
+                        City = customer.User.Address.City,
+                        Country = customer.User.Address.Country,
+                        State = customer.User.Address.State,
+                        NumberLine = customer.User.Address.NumberLine,
+                        PostalCode = customer.User.Address.PostalCode,
+                        Street = customer.User.Address.Street
+                     }
+                }
+            }).ToList();
+        }
+
+        public async Task<BaseResponse> RegisterAsync(CreateCustomerRequestModel model)
+        {
+            var check = await _customerRepo.CheckIfExist(model.Email);
+            if(check == true)
+            {
+                return new BaseResponse
+                {
+                    Message = "Email Exists Already",
+                    Success = false
+                };
+            }
+            var customer = new Customer
+            {
+                NextOfKin = model.NextOfKin,
+                DateOfBirth = model.DathOfBirth,
+                Wallet = 0.00m,
+                Gender = model.Gender,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                User = new User
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    Password = model.Password,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    Address = new Address
+                    {
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                        City = model.City,
+                        Country = model.Country,
+                        Street = model.Street,
+                        NumberLine = model.NumberLine,
+                        PostalCode = model.PostalCode,
+                        State = model.State,
+                    }
+                }
+            };
+            await _customerRepo.CreateAsync(customer);
+            return new BaseResponse
+            {
+                Message = "Successfully Registered",
+                Success = true,
+            };
+        }
+
+        public async Task<BaseResponse> UpdateWalletAsync(string email, UpdateCustomerRequestModel model)
+        {
+             var customer = await _customerRepo.GetByEmailAsync(email);
+            customer.Wallet += model.Wallet;
+             await _customerRepo.UpdateAsync(customer);
+
+             return new BaseResponse
+             {
+                Message = "Wallet Updated Successfully",
+                Success = false,
+             };
+        }
+
+        public async Task<CustomerResponsModel> VeiwProfileAsync(string email)
+        {
+             var customer = await _customerRepo.GetByEmailAsync(email);
+             if(customer == null)
+             {
+                return new CustomerResponsModel
+                {
+                    Message = "Profile not found",
+                    Success = false
+                };
+             }
+
+            return new CustomerResponsModel
+            {
+                Message = "Profile was found",
+                Success = true,
+                Data = new CustomerDto
+                {
+                    DateOfBirth = customer.DateOfBirth,
+                    NextOfKin = customer.NextOfKin,
+                    Gender = customer.Gender,
+                    Wallet = customer.Wallet,
+                    User = new UserDto()
+                    {
+                        Name = customer.User.FirstName + " " + customer.User.LastName,
+                        NumberLine = customer.User.Address.NumberLine,
+                        PostalCode = customer.User.Address.PostalCode,
+                        PhoneNumber = customer.User.PhoneNumber,
+                        Country = customer.User.Address.Country,
+                        Street = customer.User.Address.Street,
+                        State = customer.User.Address.State,
+                        City = customer.User.Address.City,
+                    }
+                }
+                
+            };
+        }
+
+
+        public async Task<BaseResponse> FundWalletAsync(string email, decimal amount)
+        {
+            var customer = await _customerRepo.GetByEmailAsync(email);
+            customer.Wallet += amount;
+            await _customerRepo.UpdateAsync(customer);
+            return new BaseResponse
+            {
+                Message = "Wallet Successfully Funded",
+                Success = false
+            };
+        }
+    }
+}
