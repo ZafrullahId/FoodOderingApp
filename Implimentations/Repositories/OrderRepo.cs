@@ -35,13 +35,17 @@ namespace EF_Core.Implimentations.Repositories
             return await _context.foodOrder
             .Include(c => c.Food)
             .Include(x => x.Order)
-            .ThenInclude(y => y.Customer)
+            .Include(c => c.Order.Address)
+            .Include(y => y.Order.Customer)
             .ThenInclude(z => z.User).ToListAsync();
         }
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
             return await _context.Orders
+            .Include(c => c.Address)
+            .Include(c => c.Customer)
+            .ThenInclude(c => c.User)
             .Where(x => x.Id == id)
             .SingleOrDefaultAsync();
         }

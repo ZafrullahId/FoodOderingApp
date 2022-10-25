@@ -43,7 +43,6 @@ C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\scopedcss\bundle\MVC Pro
 C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\MVC Project.TagHelpers.input.cache
 C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\MVC Project.TagHelpers.output.cache
 C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\MVC Project.RazorCoreGenerate.cache
-C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\Razor\Views\Customer\CustomerOrderProfile.cshtml.g.cs
 C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\Razor\Views\Customer\Delete.cshtml.g.cs
 C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\Razor\Views\Customer\Edit.cshtml.g.cs
 C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\Razor\Views\Customer\FundWallet.cshtml.g.cs
@@ -79,3 +78,5 @@ C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\MVC Project.dll
 C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\ref\MVC Project.dll
 C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\MVC Project.pdb
 C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\MVC Project.genruntimeconfig.cache
+C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\Razor\Views\Order\CustomerOrderProfile.cshtml.g.cs
+C:\Users\Zafrullah\Desktop\MVC Project\obj\Debug\net5.0\Razor\Views\Order\CreateOrder.cshtml.g.cs

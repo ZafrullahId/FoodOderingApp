@@ -58,12 +58,6 @@ namespace EF_Core.Implimentations.Repositories
             model.FirstName = staff.User.FirstName;
             model.LastName = staff.User.LastName;
             model.PhoneNumber = staff.User.PhoneNumber;
-            model.PostalCode = staff.User.Address.PostalCode;
-            model.NumberLine = staff.User.Address.NumberLine;
-            model.Street = staff.User.Address.Street;
-            model.State = staff.User.Address.State;
-            model.City = staff.User.Address.City;
-            model.Country = staff.User.Address.Country;
             var response = await _staffRepo.UpdateAsync(staff);
             return new BaseResponse
             {
@@ -92,12 +86,6 @@ namespace EF_Core.Implimentations.Repositories
                             Name = $"{staff.User.FirstName} {staff.User.LastName}",
                             Email = staff.User.Email,
                             PhoneNumber = staff.User.PhoneNumber,
-                            City = staff.User.Address.City,
-                            Country = staff.User.Address.Country,
-                            State = staff.User.Address.State,
-                            NumberLine = staff.User.Address.NumberLine,
-                            PostalCode = staff.User.Address.PostalCode,
-                            Street = staff.User.Address.Street
                         }
                     }
                  };
@@ -135,12 +123,6 @@ namespace EF_Core.Implimentations.Repositories
                         Name = $"{staff.User.FirstName} {staff.User.LastName}",
                         Email = staff.User.Email,
                         PhoneNumber = staff.User.PhoneNumber,
-                        City = staff.User.Address.City,
-                        Country = staff.User.Address.Country,
-                        State = staff.User.Address.State,
-                        NumberLine = staff.User.Address.NumberLine,
-                        PostalCode = staff.User.Address.PostalCode,
-                        Street = staff.User.Address.Street
                     }
                 }
             };
@@ -171,12 +153,6 @@ namespace EF_Core.Implimentations.Repositories
                         Name = $"{staff.User.FirstName} {staff.User.LastName}",
                         Email = staff.User.Email,
                         PhoneNumber = staff.User.PhoneNumber,
-                        City = staff.User.Address.City,
-                        Country = staff.User.Address.Country,
-                        State = staff.User.Address.State,
-                        NumberLine = staff.User.Address.NumberLine,
-                        PostalCode = staff.User.Address.PostalCode,
-                        Street = staff.User.Address.Street
                     }
                 }
             };
@@ -206,12 +182,6 @@ namespace EF_Core.Implimentations.Repositories
                         Name = $"{staff.User.LastName} {staff.User.FirstName}",
                         Email = staff.User.Email,
                         PhoneNumber = staff.User.PhoneNumber,
-                        City = staff.User.Address.City,
-                        Country = staff.User.Address.Country,
-                        State = staff.User.Address.State,
-                        NumberLine = staff.User.Address.NumberLine,
-                        PostalCode = staff.User.Address.PostalCode,
-                        Street = staff.User.Address.Street
                     }
                 }
             }).ToList();
@@ -235,16 +205,6 @@ namespace EF_Core.Implimentations.Repositories
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
                     Password = model.Password,
-                    Address = new Address()
-                    {
-                        CreatedAt = DateTime.Now,
-                        PostalCode = model.PostalCode,
-                        NumberLine = model.NumberLine,
-                        Street = model.Street,
-                        City = model.City,
-                        State = model.State,
-                        Country = model.Country,
-                    }
                 }
             };
             await _staffRepo.CreateAsync(staff);
@@ -280,12 +240,6 @@ namespace EF_Core.Implimentations.Repositories
                         Name = $"{staff.User.FirstName} {staff.User.LastName}",
                         Email = staff.User.Email,
                         PhoneNumber = staff.User.PhoneNumber,
-                        City = staff.User.Address.City,
-                        Country = staff.User.Address.Country,
-                        State = staff.User.Address.State,
-                        NumberLine = staff.User.Address.NumberLine,
-                        PostalCode = staff.User.Address.PostalCode,
-                        Street = staff.User.Address.Street
                     }
                 }
             };

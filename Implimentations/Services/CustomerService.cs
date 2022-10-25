@@ -72,17 +72,10 @@ namespace EF_Core.Implimentations.Service
                 };
             }
             customer.NextOfKin = model.NextOfKin;
-            customer.DateOfBirth = model.DathOfBirth;
             customer.Gender = model.Gender;
             customer.User.FirstName = model.FirstName;
             customer.User.LastName = model.LastName;
             customer.User.PhoneNumber = model.PhoneNumber;
-            customer.User.Address.NumberLine = model.NumberLine;
-            customer.User.Address.Street = model.City;
-            customer.User.Address.PostalCode = model.PostalCode;
-            customer.User.Address.City = model.City;
-            customer.User.Address.State = model.State;
-            customer.User.Address.Country = model.Country;
             customer.UpdatedAt = DateTime.Now;
             var response = await _customerRepo.UpdateAsync(customer); 
                 return new BaseResponse
@@ -106,7 +99,6 @@ namespace EF_Core.Implimentations.Service
                     {
                         Id = customer.Id,
                         NextOfKin = customer.NextOfKin,
-                        DateOfBirth = customer.DateOfBirth,
                         Gender = customer.Gender,
                         Wallet = customer.Wallet,
                         User = new UserDto
@@ -115,12 +107,6 @@ namespace EF_Core.Implimentations.Service
                             Name = $"{customer.User.LastName} {customer.User.FirstName}",
                             Email = customer.User.Email,
                             PhoneNumber = customer.User.PhoneNumber,
-                            City = customer.User.Address.City,
-                            Country = customer.User.Address.Country,
-                            State = customer.User.Address.State,
-                            NumberLine = customer.User.Address.NumberLine,
-                            PostalCode = customer.User.Address.PostalCode,
-                            Street = customer.User.Address.Street
                         }
                     }
                 };
@@ -146,7 +132,6 @@ namespace EF_Core.Implimentations.Service
                     {
                         Id = customer.Id,
                         NextOfKin = customer.NextOfKin,
-                        DateOfBirth = customer.DateOfBirth,
                         Gender = customer.Gender,
                         Wallet = customer.Wallet,
                         User = new UserDto
@@ -154,12 +139,6 @@ namespace EF_Core.Implimentations.Service
                             Name = $"{customer.User.LastName} {customer.User.FirstName}",
                             Email = customer.User.Email,
                             PhoneNumber = customer.User.PhoneNumber,
-                            City = customer.User.Address.City,
-                            Country = customer.User.Address.Country,
-                            State = customer.User.Address.State,
-                            NumberLine = customer.User.Address.NumberLine,
-                            PostalCode = customer.User.Address.PostalCode,
-                            Street = customer.User.Address.Street
                         }
                     }
                 };
@@ -181,19 +160,12 @@ namespace EF_Core.Implimentations.Service
                 {
                         Id = customer.Id,
                         NextOfKin = customer.NextOfKin,
-                        DateOfBirth = customer.DateOfBirth,
                         Gender = customer.Gender,
                      User = new UserDto()
                      {
                         Name = $"{customer.User.LastName} {customer.User.FirstName}",
                         Email = customer.User.Email,
                         PhoneNumber = customer.User.PhoneNumber,
-                        City = customer.User.Address.City,
-                        Country = customer.User.Address.Country,
-                        State = customer.User.Address.State,
-                        NumberLine = customer.User.Address.NumberLine,
-                        PostalCode = customer.User.Address.PostalCode,
-                        Street = customer.User.Address.Street
                      }
                 }
             }).ToList();
@@ -213,7 +185,6 @@ namespace EF_Core.Implimentations.Service
             var customer = new Customer
             {
                 NextOfKin = model.NextOfKin,
-                DateOfBirth = model.DathOfBirth,
                 Wallet = 0.00m,
                 Gender = model.Gender,
                 CreatedAt = DateTime.Now,
@@ -227,17 +198,6 @@ namespace EF_Core.Implimentations.Service
                     Password = model.Password,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    Address = new Address
-                    {
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now,
-                        City = model.City,
-                        Country = model.Country,
-                        Street = model.Street,
-                        NumberLine = model.NumberLine,
-                        PostalCode = model.PostalCode,
-                        State = model.State,
-                    }
                 }
             };
             await _customerRepo.CreateAsync(customer);
@@ -279,20 +239,14 @@ namespace EF_Core.Implimentations.Service
                 Success = true,
                 Data = new CustomerDto
                 {
-                    DateOfBirth = customer.DateOfBirth,
                     NextOfKin = customer.NextOfKin,
                     Gender = customer.Gender,
                     Wallet = customer.Wallet,
                     User = new UserDto()
                     {
                         Name = customer.User.FirstName + " " + customer.User.LastName,
-                        NumberLine = customer.User.Address.NumberLine,
-                        PostalCode = customer.User.Address.PostalCode,
-                        PhoneNumber = customer.User.PhoneNumber,
-                        Country = customer.User.Address.Country,
-                        Street = customer.User.Address.Street,
-                        State = customer.User.Address.State,
-                        City = customer.User.Address.City,
+                        Email = customer.User.Email,
+                        PhoneNumber = customer.User.PhoneNumber
                     }
                 }
                 

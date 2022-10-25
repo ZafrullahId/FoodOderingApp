@@ -10,6 +10,7 @@ using System.Threading.Tasks;
         public int CustomerId { get; set; }    
         public bool IsDelivered { get;set; }
         public Customer Customer { get; set; }
+        public Address Address {get;set;}
         public List<FoodOrder> FoodOrders { get;set; }
     }
  }

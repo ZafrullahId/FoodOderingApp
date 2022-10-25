@@ -122,12 +122,12 @@ namespace MVC_Project.Controllers
             var info = await _customerService.VeiwProfileAsync(HttpContext.Session.GetString("Email"));
             return View(info);
         } 
-         [ActionName("CustomerOrderProfile")]
-         public async Task<IActionResult> CustomerOrderProfileAsync(string email)
-        {
-            var info = await _customerService.VeiwProfileAsync(email);
-            return View(info);
-        }
+        //  [ActionName("CustomerOrderProfile")]
+        //  public async Task<IActionResult> CustomerOrderProfileAsync(string email)
+        // {
+        //     var info = await _customerService.VeiwProfileAsync(email);
+        //     return View(info);
+        // }
         
 
         

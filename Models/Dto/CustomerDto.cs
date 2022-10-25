@@ -13,7 +13,6 @@ namespace EF_Core.Models.Dto
         public UserDto User { get; set; }
         public decimal Wallet { get;set; }
         public string NextOfKin { get; set; }
-        public DateTime DateOfBirth { get; set; }
         public Gender Gender { get; set; }
     }
 }

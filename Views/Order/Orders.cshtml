@@ -22,14 +22,14 @@
                     if (food.Order.IsDelivered == true)
                     {
                        <div class="btn-group">
-                                <a class="btn-warning btn" asp-action="CustomerOrderProfile" asp-controller="Customer" asp-route-email=@food.Order.Customer.User.Email>Customer</a>        
+                                <a class="btn-warning btn" asp-action="CustomerOrderProfile" asp-controller="Customer" asp-route-id=@food.Order.Id>Customer</a>        
                                 <button class="btn-danger btn" asp-action="DeliveryStatus" asp-controller="Order" asp-route-Id=@food.Order.Id disabled>Mark as Delivered</button>
                             </div>              
                     }
                     else
                     {
                             <div class="btn-group">
-                                <a class="btn-warning btn" asp-action="CustomerOrderProfile" asp-controller="Customer" asp-route-email=@food.Order.Customer.User.Email>Customer</a>
+                                <a class="btn-warning btn" asp-action="CustomerOrderProfile" asp-controller="Order" asp-route-id=@food.Order.Id>Customer</a>
                                 <a class="btn-danger btn" asp-action="DeliveryStatus" asp-controller="Order" asp-route-Id=@food.Order.Id>Mark as Delivered</a>
                             </div>              
                     }

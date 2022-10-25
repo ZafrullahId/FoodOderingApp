@@ -1,55 +1,45 @@
 
 @using EF_Core.Models.DTOs.ResponseModels
-@model CustomerResponsModel
+@model OrderResponseModel
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <div>
     <div>
         <label>
-        NAME:@Model.Data.User.Name
+        NAME:@Model.Data.customerDto.User.Name
     </label>
     </div>
     
      <div>
         <label>
-        PHONENUMBER:@Model.Data.User.PhoneNumber
+        PHONENUMBER:@Model.Data.customerDto.User.Email
     </label>
     </div>
 
     <div>
         <label>
-        GENDER:@Model.Data.Gender
+        GENDER:@Model.Data.customerDto.Gender
     </label>
     </div>
    
     <div>
         <label>
-        NUMBERLINE:@Model.Data.User.NumberLine
-    </label>
-    </div>
-    <div>
-        <label>
-        POSTALCODE:@Model.Data.User.PostalCode
+        POSTALCODE:@Model.Data.PostalCode
     </label>
     </div>
    
     <div>
         <label>
-        STREET:@Model.Data.User.Street
+        STREET:@Model.Data.Street
     </label>
     </div>
     <div>
         <label>
-        CITY:@Model.Data.User.City
+        CITY:@Model.Data.City
     </label>
     </div>
     <div>
         <label>
-        STATE:@Model.Data.User.State
-    </label>
-    </div>
-    <div>
-        <label>
-        COUNTRY:@Model.Data.User.Country
+        STATE:@Model.Data.State
     </label>
     </div>
 

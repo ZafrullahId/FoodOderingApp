@@ -47,7 +47,14 @@ namespace EF_Core.Implimentations.Repositories
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 CustomerId = customer.Id,
-                IsDelivered = model.IsDelivered
+                IsDelivered = model.IsDelivered,
+                Address = new Address
+                {
+                    PostalCode = model.PostalCode,
+                    City = model.City,
+                    State = model.State,
+                    Street = model.Street
+                }
             };
             await _orderRepo.CreateAsync(order);
             var foodOrder = new FoodOrder
@@ -64,7 +71,10 @@ namespace EF_Core.Implimentations.Repositories
                 Success = true
             };
         }
+        // public async Task<BaseResponse> CreateFoodOrder()
+        // {
 
+        // }
         public async Task<BaseResponse> CalculatePriceAsync(string email, decimal price)
         {
             var customer = await _customerRepo.GetByEmailAsync(email);
@@ -88,6 +98,7 @@ namespace EF_Core.Implimentations.Repositories
         public async Task<OrderResponseModel> GetOrderById(int id)
         {
             var order = await _orderRepo.GetOrderByIdAsync(id);
+            var d = order.Address.Id;
             if(order == null)
             {
                 return new OrderResponseModel
@@ -101,11 +112,14 @@ namespace EF_Core.Implimentations.Repositories
                     Data = new OrderDto
                     {
                         IsDelivered = order.IsDelivered,
+                        State = order.Address.State,
+                        City = order.Address.City,
+                        Street = order.Address.Street,
+                        PostalCode = order.Address.PostalCode,
                         customerDto = new CustomerDto
                         {
                             Id = order.Customer.Id,
                             NextOfKin = order.Customer.NextOfKin,
-                            DateOfBirth = order.Customer.DateOfBirth,
                             Gender = order.Customer.Gender,
                             Wallet = order.Customer.Wallet,
                              User = new UserDto
@@ -113,12 +127,6 @@ namespace EF_Core.Implimentations.Repositories
                                 Name = $"{order.Customer.User.LastName} {order.Customer.User.FirstName}",
                                 Email = order.Customer.User.Email,
                                 PhoneNumber = order.Customer.User.PhoneNumber,
-                                City = order.Customer.User.Address.City,
-                                Country = order.Customer.User.Address.Country,
-                                State = order.Customer.User.Address.State,
-                                NumberLine = order.Customer.User.Address.NumberLine,
-                                PostalCode = order.Customer.User.Address.PostalCode,
-                                Street = order.Customer.User.Address.Street
                             }
                         }
                     }

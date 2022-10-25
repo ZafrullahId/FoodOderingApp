@@ -43,20 +43,18 @@ namespace EF_Core.Implimentations.Repositories
         public async Task<Customer> GetByEmailAsync(string email)
         {
             return await _context.Customers
-            .Include(c => c.User.Address).Include(c => c.User)
+            .Include(c => c.User)
             .SingleOrDefaultAsync(x => x.User.Email == email);
         }
         public async Task<bool> CheckEmailAsnc(string email)
         {
             return await _context.Customers
-            .Include(c => c.User.Address)
             .Include(c => c.User)
             .Where(x => x.User.Email == email).AnyAsync();
         }
         public async Task<bool> DeleteAsync(string email)
         {
             var customer = await _context.Users
-              .Include(c => c.Address)
               .FirstOrDefaultAsync(x => x.Email == email);
               
             _context.Users.Remove(customer);

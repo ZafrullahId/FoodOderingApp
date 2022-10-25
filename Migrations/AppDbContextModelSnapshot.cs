@@ -26,14 +26,8 @@ namespace MVC_Project.Migrations
                     b.Property<string>("City")
                         .HasColumnType("text");
 
-                    b.Property<string>("Country")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
-
-                    b.Property<string>("NumberLine")
-                        .HasColumnType("text");
 
                     b.Property<int>("PostalCode")
                         .HasColumnType("int");
@@ -59,9 +53,6 @@ namespace MVC_Project.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime");
 
                     b.Property<int>("Gender")
@@ -157,6 +148,9 @@ namespace MVC_Project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
 
@@ -170,6 +164,8 @@ namespace MVC_Project.Migrations
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("CustomerId");
 
@@ -216,9 +212,6 @@ namespace MVC_Project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
 
@@ -241,8 +234,6 @@ namespace MVC_Project.Migrations
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
 
                     b.ToTable("Users");
                 });
@@ -279,11 +270,17 @@ namespace MVC_Project.Migrations
 
             modelBuilder.Entity("EF_Core.Models.Entity.Order", b =>
                 {
+                    b.HasOne("EF_Core.Models.Entity.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
                     b.HasOne("EF_Core.Models.Entity.Customer", "Customer")
                         .WithMany("Order")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Address");
 
                     b.Navigation("Customer");
                 });
@@ -297,17 +294,6 @@ namespace MVC_Project.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EF_Core.Models.Entity.User", b =>
-                {
-                    b.HasOne("EF_Core.Models.Entity.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("EF_Core.Models.Entity.Customer", b =>

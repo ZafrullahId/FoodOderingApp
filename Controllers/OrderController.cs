@@ -88,7 +88,7 @@ namespace MVC_Project.Controllers
             }
            return View(await _foodService.GetByIdAsync(id));
         }
-
+        
         public async Task<IActionResult> DeliveryStatus(int id)
         {
            var order = await _orderService.UpdateStatus(id);
@@ -99,6 +99,12 @@ namespace MVC_Project.Controllers
            return RedirectToAction("Orders");
         //    order.Data.IsDelivered = true;
         //    await _orderService.UpdateStatus(order);
+        }
+        [ActionName("CustomerOrderProfile")]
+         public async Task<IActionResult> CustomerOrderProfileAsync(int id)
+        {
+            var info = await _orderService.GetOrderById(id);
+            return View(info);
         }
     }
 }

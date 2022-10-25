@@ -42,13 +42,12 @@ namespace EF_Core.Implimentations.Repositories
         {
             return await _context.Staffs
             .Include(c => c.User)
-            .ThenInclude(x => x.Address)
             .SingleOrDefaultAsync(x => x.Id == staffId);
         }
         public async Task<Staff> GetByEmailAsync(string email)
         {
             return await _context.Staffs
-            .Include(c => c.User.Address).Include(x => x.User)
+            .Include(x => x.User)
             .SingleOrDefaultAsync(x => x.User.Email == email);
         }
         public async Task<Staff> GetByRoleAsync(Role role)
@@ -69,7 +68,6 @@ namespace EF_Core.Implimentations.Repositories
         {
             return await _context.Staffs
                 .Include(c => c.User)
-                .ThenInclude(x => x.Address)
                 .ToListAsync();
         }
 

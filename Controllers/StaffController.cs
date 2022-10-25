@@ -30,7 +30,7 @@ namespace MVC_Project.Controllers
         [ActionName("AddStaff")]
         public async Task<IActionResult> AddStaffAsync(CreateStaffRequestModel model)
         {
-             if(HttpContext.Session.GetString("Role") != "Admin")
+            if(HttpContext.Session.GetString("Role") != "Admin")
             {
                 return RedirectToAction("AdminLogin");
             }
