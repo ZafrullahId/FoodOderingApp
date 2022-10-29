@@ -49,7 +49,6 @@ namespace MVC_Project.Controllers
                 }
                 else
                 {
-                    // var customer = await _customerService.FindByEmailAsync(HttpContext.Session.GetString("Email"));
                    var response = await _orderService.CalculatePriceAsync(HttpContext.Session.GetString("Email"),food.Data.Price);
                     if(response.Success == false)
                     {
@@ -57,31 +56,7 @@ namespace MVC_Project.Controllers
                     }
                     else
                     {
-                        // var custom = await _customerService.CheckWalletAsync(HttpContext.Session.GetString("Email"));
-                    //    await _orderService.CalculatePriceAsync(HttpContext.Session.GetString("Email"),food.Data.Price);
-                        // custom.Wallet -= food.Price;
-                        // updateCustomerDto.Wallet = custom.Wallet;
-                        // await  _customerService.WalletUpdateAsnc(HttpContext.Session.GetString("Email"),updateCustomerDto);
-
-                        // var customer1 = await _customerService.FindByEmailAsync(HttpContext.Session.GetString("Email"));
                        var order = await _orderService.CreateOrderAsync(model,HttpContext.Session.GetString("Email"),id);
-                        // var order = new Order()
-                        // {
-                        //     CreatedAt = DateTime.Now,
-                        //     UpdatedAt = DateTime.Now,
-                        //     IsDelivered = false,
-                        //     CustomerId = customer1.Id
-                        // };
-                        // await _orderService.CreateOrderAsync(order);
-                        // var order = _orderService.CreateOrderAsync(HttpContext.Session.GetString("Email"));
-                        //   var foodOrder = new FoodOrder()
-                        // {
-                        //     UpdatedAt = DateTime.Now,
-                        //     CreatedAt = DateTime.Now,
-                        //     FoodId = food.Id,
-                        //     OrderId = order.Id,
-                        // };
-                    //   await  _orderService.CreateFoodOrderAsync(foodOrder);
                         return Content(order.Message + "," + response.Message);
                     }
                 }
@@ -97,8 +72,6 @@ namespace MVC_Project.Controllers
              return Content(order.Message);
            }
            return RedirectToAction("Orders");
-        //    order.Data.IsDelivered = true;
-        //    await _orderService.UpdateStatus(order);
         }
         [ActionName("CustomerOrderProfile")]
          public async Task<IActionResult> CustomerOrderProfileAsync(int id)

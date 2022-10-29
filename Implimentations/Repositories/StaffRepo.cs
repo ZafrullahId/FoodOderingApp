@@ -58,10 +58,8 @@ namespace EF_Core.Implimentations.Repositories
         }
         public async Task<bool> DeleteAsync(Staff staff)
         {
-            // var staff = await _context.Staffs
-            // .FirstOrDefaultAsync(x => x.Id == staffId);
             _context.Staffs.Remove(staff);
-          await  _context.SaveChangesAsync();
+            await  _context.SaveChangesAsync();
             return true;
         }
         public async Task<List<Staff>> ListAsync()
@@ -70,7 +68,5 @@ namespace EF_Core.Implimentations.Repositories
                 .Include(c => c.User)
                 .ToListAsync();
         }
-
-
     }
 }
